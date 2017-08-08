@@ -127,6 +127,8 @@ Urban::Urban(const JSONValue _json)
 	jobEfficiency.resize(cData.size());
 	avgIncome.resize(cData.size());
 
+	
+
 	for (auto i : step(int(rData.size())))
 	{
 		if (!_json[L"Resources." + rData[i].name].isEmpty())

@@ -22,16 +22,19 @@ Basket::Basket(int _itemType, int _joinedUrbanID)
 	, joinedUrbanID(_joinedUrbanID)
 {
 	chart.resize(1024);
+	consumptionLog.resize(1024);
+	productionLog.resize(1024);
 }
 String&	Basket::getItemName() const { return iData[itemType].name; }
 void	Basket::addRing(int _price, int _num, const Group* _owner)
 {
-	rings.push_back({ _price, _num, _owner });
+	rings.emplace_back(_price, _num, _owner);
 	rings.sort();
 }
 void	Basket::addRing(int _price, int _num, const Citizen* _owner)
 {
-	rings.push_back({ _price, _num, _owner });
+	productionLog.front() += _num;	//ÉçÉOÇ…í«ãL
+	rings.emplace_back(_price, _num, _owner);
 	rings.sort();
 }
 int		Basket::getCost(int _num) const

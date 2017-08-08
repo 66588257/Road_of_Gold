@@ -6,6 +6,7 @@
 #include"Group.h"
 #include"GlobalVariables.h"
 #include"TinyCamera.h"
+#include"SlideBar.h"
 
 double timeSpeed = 0.0001;
 double worldTimer = 0;
@@ -37,7 +38,6 @@ void Main()
 
 
 	if (!loadJSONData() || !planet.loadNodeMap() || !planet.loadBiome() || !planet.loadVoronoiMap()) return;
-	planet.setRegions();
 
 	for (auto& p : paths) p->cost = p->length * (bData[p->getChildNode().biomeType].movingCost + bData[p->getParentNode().biomeType].movingCost) / 2.0;
 
@@ -45,8 +45,11 @@ void Main()
 
 	planet.makeGroupsRandom();
 
+	SlideBar slidebar(640,32,16,180,32);
+
 	while (System::Update())
 	{
+
 		if (KeyF1.down()) timeSpeed = 0.0001;
 		if (KeyF2.down()) timeSpeed = Max(0.0001, timeSpeed*0.5);
 		if (KeyF3.down()) timeSpeed = Min(1.0000, timeSpeed*2.0);
@@ -109,10 +112,6 @@ void Main()
 		for (int i = 0; i < 2; ++i)
 		{
 			const auto t1 = tinyCamera.createTransformer(i);
-
-			//Node
-			if (KeyT.pressed())
-				for (const auto& n : nodes) n.draw(n.joinedRegionID == -1 ? Color(Palette::White, 64) : n.getJoinedRegion().color);
 
 			//Route
 			if (KeyY.pressed())
@@ -266,11 +265,30 @@ void Main()
 
 
 				//チャート
-				Rect(160, 180, 192, 64).drawFrame(2, fColor);
-				int max = 1; for (int i = 0; i < 191; ++i) max = Max(max, bs.chart[i]);
+				{
+					int size = 4;
+					Rect(160, 180, 192, 64).drawFrame(2, fColor);
+					int maxA = 1; for (int i = 0; i < 191*size; ++i) maxA = Max(maxA, bs.consumptionLog[i]);
+					int maxB = 1; for (int i = 0; i < 191*size; ++i) maxB = Max(maxB, bs.productionLog[i]);
+					int maxC = 1; for (int i = 0; i < 191*size; ++i) maxC = Max(maxC, bs.chart[i]);
+					for (int i = 0; i < 191; ++i)
+					{
+						Line(191 - i, 63 - bs.consumptionLog[size*i] * 62 / maxA, 190 - i, 63 - bs.consumptionLog[size * (i + 1)] * 62 / maxA).movedBy(160, 180).draw(1, Palette::Blue);
+						Line(191 - i, 63 - bs.productionLog[size * i] * 62 / maxB, 190 - i, 63 - bs.productionLog[size * (i + 1)] * 62 / maxB).movedBy(160, 180).draw(1, Palette::Red);
+						Line(191 - i, 63 - bs.chart[size * i] * 62 / maxC, 190 - i, 63 - bs.chart[size *(i + 1)] * 62 / maxC).movedBy(160, 180).draw(1, Palette::Yellow);
+					}
+				}
+				/*Rect(160, 180, 192, 64).drawFrame(2, fColor);
+				int maxA = 1; for (int i = 0; i < 191; ++i) maxA = Max(maxA, bs.consumptionLog[i]);
+				int maxB = 1; for (int i = 0; i < 191; ++i) maxB = Max(maxB, bs.productionLog[i]);
+				int maxC = 1; for (int i = 0; i < 191; ++i) maxC = Max(maxC, bs.chart[i]);
 				for (int i = 0; i < 191; ++i)
-					Line(191 - i, 63 - bs.chart[i] * 62 / max, 190 - i, 63 - bs.chart[i + 1] * 62 / max).movedBy(160, 180).draw(1, Palette::Yellow);
-
+					Line(191 - i, 63 - bs.consumptionLog[i] * 62 / maxA, 190 - i, 63 - bs.consumptionLog[i + 1] * 62 / maxA).movedBy(160, 180).draw(1, Palette::Blue);
+				for (int i = 0; i < 191; ++i)
+					Line(191 - i, 63 - bs.productionLog[i] * 62 / maxB, 190 - i, 63 - bs.productionLog[i + 1] * 62 / maxB).movedBy(160, 180).draw(1, Palette::Red);
+				for (int i = 0; i < 191; ++i)
+					Line(191 - i, 63 - bs.chart[i] * 62 / maxC, 190 - i, 63 - bs.chart[i + 1] * 62 / maxC).movedBy(160, 180).draw(1, Palette::Yellow);
+					*/
 				//安い順にソートして他市場との比較を描画
 				/*
 				{

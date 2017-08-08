@@ -226,6 +226,7 @@
     <ClInclude Include="Planet.h" />
     <ClInclude Include="Pos.h" />
     <ClInclude Include="Route.h" />
+    <ClInclude Include="SlideBar.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TinyCamera.h" />
     <ClInclude Include="Urban.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="MakeGroups.cpp" />
     <ClCompile Include="Planet.cpp" />
     <ClCompile Include="Route.cpp" />
+    <ClCompile Include="SlideBar.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

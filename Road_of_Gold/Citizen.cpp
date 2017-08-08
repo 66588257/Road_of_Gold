@@ -41,6 +41,7 @@ void	Citizen::goToShopping()
 		{
 			money -= u.baskets[j].getPrice();
 			u.baskets[j].buyItem(1);
+			u.baskets[j].consumptionLog.front()++;	//ƒƒO‚É’Ç‹L
 			hapiness += iData[j].value;
 		}
 	}
@@ -113,7 +114,7 @@ void	Citizen::update()
 				//”ƒ‚¢•¨‚ğ‚·‚é
 				goToShopping();
 			}
-			else addMoney(50);	//˜J“­Ò‚Æ‚µ‚Ä“­‚­
+			else addMoney(250);	//˜J“­Ò‚Æ‚µ‚Ä“­‚­
 		}
 	}
 }

@@ -23,8 +23,10 @@ struct Basket
 {
 	int		joinedUrbanID;
 	int		itemType;
-	Array<int>	tradeLog;
-	Array<int>	chart;
+	Array<int>	tradeLog;	//取引ログ
+	Array<int>	chart;		//最安値ログ(日付単位)
+	Array<int>	productionLog;	//生産ログ（日付単位）
+	Array<int>	consumptionLog;	//消費ログ（日付単位）
 	Array<Ring> rings;
 
 	Basket(int _itemType, int _joinedUrbanID);

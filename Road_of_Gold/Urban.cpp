@@ -71,6 +71,10 @@ void	Urban::update()
 			b.chart.push_front(b.tradeLog.isEmpty() ? b.chart.front() : int(b.tradeLog.sum() / double(b.tradeLog.size())));
 			b.tradeLog.clear();
 			b.chart.pop_back();
+			b.consumptionLog.push_front(0);
+			b.productionLog.push_front(0);
+			b.consumptionLog.pop_back();
+			b.productionLog.pop_back();
 		}
 	}
 

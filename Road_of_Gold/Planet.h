@@ -15,17 +15,9 @@ struct Planet
 	Texture		mapTexture;
 
 	Planet();
-	void	setRegions();
 	void	makeGroupsRandom();
 	bool	loadNodeMap();
 	bool	loadBiome();
 	bool	loadVoronoiMap();
-
-	void	updateUrbans();
-	void	updateGroups();
-	void	updateCamera();
-	void	drawUrbans() const;
-	void	drawGroups() const;
-	void	drawCamera() const;
 };
 extern Planet planet;
